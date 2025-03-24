@@ -1,80 +1,39 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
 import { NoPlanError } from "@skillsync/components/NoPlanError";
 import { RecapCard } from "@skillsync/components/RecapCard";
 import { WeekCard } from "@skillsync/components/WeekCard";
-import { PlanBreakdown } from "@skillsync/utils/breakdowns";
-import {
-  learningPlans,
-  LearningPlanType,
-} from "@skillsync/utils/learningPlans";
-import { useQuery } from "@tanstack/react-query";
+import { breakdown } from "@skillsync/utils/breakdowns";
+import { learningPlans } from "@skillsync/utils/learningPlans";
 import Link from "next/link";
+import { Layout } from "../../Layout";
 
-const generatePlan = async ({
-  plan,
-  topics,
-  hours,
-}: {
-  plan?: LearningPlanType;
-  topics: string;
-  hours: string;
-}): Promise<PlanBreakdown> => {
-  if (!plan) {
-    throw new Error("Plan not found");
-  }
-
-  const response = await fetch("/api/generate-plan", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      plan: plan.title,
-      topics: topics ?? "",
-      hoursPerWeek: hours,
-    }),
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.error || "Failed to generate meal plan.");
-  }
-
-  return response.json();
-};
-
-export const GeneratedPlan = ({
-  id,
-  hours,
-  topics,
-}: {
-  id: string;
-  hours?: string;
-  topics?: string;
-}) => {
-  const { isLoaded, isSignedIn } = useUser();
+export const PlanPage = ({ id }: { id: string }) => {
   const plan = learningPlans.find((plan) => plan.id === id);
-  const {
-    data: generatedPlan,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["generatedPlan", { plan, topics, hours }],
-    queryFn: async () => {
-      const data = await generatePlan({
-        plan,
-        topics: topics ?? "",
-        hours: hours ?? "10",
-      });
-      return data;
-    },
-    staleTime: Infinity,
-    retry: false,
-    enabled: isLoaded && isSignedIn,
-  });
+  const generatedPlan = breakdown;
+  const isLoading = false;
+  const isError = false;
+  const error = { message: "no" };
+  //   const { isLoaded, isSignedIn } = useUser();
+  //   const {
+  //     data: generatedPlan,
+  //     isLoading,
+  //     isError,
+  //     error,
+  //   } = useQuery({
+  //     queryKey: ["generatedPlan", { plan, topics, hours }],
+  //     queryFn: async () => {
+  //       const data = await generatePlan({
+  //         plan,
+  //         topics: topics ?? "",
+  //         hours: hours ?? "10",
+  //       });
+  //       return data;
+  //     },
+  //     staleTime: Infinity,
+  //     retry: false,
+  //     enabled: isLoaded && isSignedIn,
+  //   });
 
   if (!plan) {
     return <NoPlanError />;
@@ -125,19 +84,7 @@ export const GeneratedPlan = ({
 
   if (generatedPlan)
     return (
-      <div className="min-h-screen flex items-center justify-start flex-col mb-[100px] relative">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-6 text-center mt-[20vh]">
-            Generated{" "}
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Plan
-            </span>
-          </h1>
-          <h2 className="text-lg font-semibold text-center text-text">
-            Here&apos;s your learning path based on {hours} hours a week for 6
-            weeks
-          </h2>
-        </div>
+      <Layout plan={plan}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-[100%]">
           <div
             className={`flex flex-col gap-2 items-center justify-center text-center bg-white rounded-md py-4  px-8 hover:drop-shadow-md text-primary cursor-pointer w-[100%]`}>
@@ -155,21 +102,18 @@ export const GeneratedPlan = ({
         <br />
         {/* <LearningPathCard plan={plan} className="max-w-[550px] mb-8" /> */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {generatedPlan.weeks.map((week) => (
-            <WeekCard key={week.id} week={week} />
-          ))}
+          {generatedPlan.weeks.map((week, index) => {
+            return (
+              <Link
+                key={week.id}
+                href={`/plan/${id}/week${index + 1}`}
+                className="h-[100%]">
+                <WeekCard week={week} />
+              </Link>
+            );
+          })}
         </div>
-        <br />
-        <Link href={"/"} className={`button mt-6`}>
-          Continue
-        </Link>
-        <br />
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-4 right-4 bg-accent p-2 rounded-full shadow-lg">
-          ↑
-        </button>
-      </div>
+      </Layout>
     );
 
   // catch all

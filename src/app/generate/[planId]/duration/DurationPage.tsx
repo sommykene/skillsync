@@ -15,8 +15,7 @@ export const DurationPage = ({
   topics: string[];
 }) => {
   const plan = learningPlans.find((plan) => plan.id === id);
-  const [hours, setHours] = useState(2);
-  const [weeks, setWeeks] = useState(12);
+  const [hours, setHours] = useState(10);
 
   if (!plan) {
     return <NoPlanError />;
@@ -64,26 +63,12 @@ export const DurationPage = ({
             <span className="text-accent font-semibold">hours</span>
           </div>
         </div>
-        <div className="flex flex-col gap-2 items-center">
-          <label htmlFor="weeks" className="font-semibold">
-            How many weeks do you want to commit to this plan?
-          </label>
-          <div className="flex gap-2 items-end">
-            <input
-              type="number"
-              id="weeks"
-              name="weeks"
-              value={weeks}
-              onChange={(e) => setWeeks(parseInt(e.target.value))}
-              className="mt-1 block rounded-md border-gray-300 bg-white shadow-sm p-2 text-right"
-            />
-            <span className="text-accent font-semibold">weeks</span>
-          </div>
-        </div>
       </div>
-      {hours != 0 && weeks != 0 && (
+      {hours != 0 && (
         <Link
-          href={`/generate/${id}/plan?hours=${hours}&weeks=${weeks}`}
+          href={`/generate/${id}/plan?topics=${topics.join(
+            ","
+          )}&hours=${hours}`}
           className="button mt-8">
           Continue
         </Link>

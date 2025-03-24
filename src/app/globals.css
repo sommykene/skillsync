@@ -32,6 +32,13 @@
   .button:hover {
     background-color: color-mix(in oklab, var(--accent) 90%, transparent);
   }
+  .loader {
+    background-color: var(--color-gray-200);
+    border-radius: var(--radius-md);
+  }
+  .week-grid {
+    grid-template-columns: max(450px) 1fr;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

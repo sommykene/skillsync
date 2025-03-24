@@ -15,7 +15,6 @@ const Page = async ({
   const { planId } = await params;
   const search = await searchParams;
 
-  console.log(search?.topics ? search.topics?.split(",") : []);
   return (
     <DurationPage
       id={planId}
