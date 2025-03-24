@@ -4,13 +4,13 @@ import { NoPlanError } from "@skillsync/components/NoPlanError";
 import { RecapCard } from "@skillsync/components/RecapCard";
 import { WeekCard } from "@skillsync/components/WeekCard";
 import { breakdown } from "@skillsync/utils/breakdowns";
-import { learningPlans } from "@skillsync/utils/learningPlans";
+import { learningPaths } from "@skillsync/utils/learningPlans";
 import Link from "next/link";
 import { Layout } from "../../Layout";
 
 export const PlanPage = ({ id }: { id: string }) => {
-  const plan = learningPlans.find((plan) => plan.id === id);
   const generatedPlan = breakdown;
+  const path = learningPaths.find((path) => path.id === generatedPlan.pathId);
   const isLoading = false;
   const isError = false;
   const error = { message: "no" };
@@ -35,7 +35,7 @@ export const PlanPage = ({ id }: { id: string }) => {
   //     enabled: isLoaded && isSignedIn,
   //   });
 
-  if (!plan) {
+  if (!path) {
     return <NoPlanError />;
   }
 
@@ -84,7 +84,7 @@ export const PlanPage = ({ id }: { id: string }) => {
 
   if (generatedPlan)
     return (
-      <Layout plan={plan}>
+      <Layout plan={path}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-[100%]">
           <div
             className={`flex flex-col gap-2 items-center justify-center text-center bg-white rounded-md py-4  px-8 hover:drop-shadow-md text-primary cursor-pointer w-[100%]`}>

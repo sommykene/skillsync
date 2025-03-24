@@ -1,5 +1,5 @@
-import { LearningPathCard } from "@skillsync/components/LearningPathCard";
-import { learningPaths } from "@skillsync/utils/learningPlans";
+import { PlanCard } from "@skillsync/components/PlanCard";
+import { breakdown, breakdown2 } from "@skillsync/utils/breakdowns";
 
 export default function Home() {
   return (
@@ -20,12 +20,8 @@ export default function Home() {
         </p>
       </div>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 w-[100%]">
-        {learningPaths.map((plan) => (
-          <LearningPathCard
-            key={plan.title}
-            plan={plan}
-            href={`/generate/${plan.id}/skills`}
-          />
+        {[breakdown, breakdown2].splice(0, 4).map((plan) => (
+          <PlanCard key={plan.title} plan={plan} />
         ))}
       </div>
     </div>

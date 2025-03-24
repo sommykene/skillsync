@@ -5,10 +5,10 @@ import { Badge } from "./Badge";
 import Link from "next/link";
 
 export const TopicsSelector = ({
-  planId,
+  pathId: planId,
   topics,
 }: {
-  planId: string;
+  pathId: string;
   topics: string[];
 }) => {
   const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
@@ -37,7 +37,9 @@ export const TopicsSelector = ({
       </div>
       {selectedTopics.length > 0 && (
         <Link
-          href={`/generate/${planId}/duration?topics=${selectedTopics.join(",")}`}
+          href={`/generate/${planId}/duration?topics=${selectedTopics.join(
+            ","
+          )}`}
           className={`button`}>
           Continue
         </Link>

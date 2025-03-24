@@ -1,4 +1,4 @@
-import { CheckBadge } from "@skillsync/assets/CheckBadge";
+import { CheckBadgeIcon } from "@skillsync/assets/CheckBadgeIcon";
 import { FinalOutcome } from "@skillsync/utils/breakdowns";
 
 export const RecapCard = ({ recap }: { recap: FinalOutcome[] }) => {
@@ -9,7 +9,7 @@ export const RecapCard = ({ recap }: { recap: FinalOutcome[] }) => {
       {recap.map((item) => (
         <div key={item.id} className="flex gap-2">
           <div className="flex items-center justify-center rounded-full">
-            <CheckBadge className="size-5" />
+            <CheckBadgeIcon className="size-5" />
           </div>
           <h5 className="text-md">{item.outcome}</h5>
         </div>

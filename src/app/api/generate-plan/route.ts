@@ -10,7 +10,7 @@ const openai = new OpenAI({
 export async function POST(request: Request) {
   try {
     // Extract parameters from the request body
-    const { plan, topics, hoursPerWeek } = await request.json();
+    const { path, topics, hoursPerWeek } = await request.json();
 
     // Send the prompt to the AI model
     const response = await openai.chat.completions.create({
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
         },
         {
           role: "user",
-          content: getPrompt({ plan, topics, hoursPerWeek }),
+          content: getPrompt({  path, topics, hoursPerWeek }),
         },
       ],
       response_format: { type: "json_object" },

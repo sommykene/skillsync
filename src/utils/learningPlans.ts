@@ -1,14 +1,11 @@
-export type LearningPlanType = {
+export type LearningPathType = {
   id: string;
   title: string;
   focus: string;
   keyTopics: string[];
 };
 
-export const myLearningPlan: string[] = ["15"];
-// export const myLearningPlan: string[] = [];
-
-export const learningPlans: LearningPlanType[] = [
+export const learningPaths: LearningPathType[] = [
   {
     id: "1",
     title: "Frontend Development",

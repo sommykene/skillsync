@@ -1,4 +1,4 @@
-import { LearningPlanType } from "@skillsync/utils/learningPlans";
+import { LearningPathType } from "@skillsync/utils/learningPlans";
 import Link from "next/link";
 
 export const LearningPathCard = ({
@@ -6,7 +6,7 @@ export const LearningPathCard = ({
   className,
   href,
 }: {
-  plan: LearningPlanType;
+  plan: LearningPathType;
   className?: string;
   href?: string;
 }) => {

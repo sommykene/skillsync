@@ -1,6 +1,6 @@
 "use client";
 
-import { LearningPlanType } from "@skillsync/utils/learningPlans";
+import { LearningPathType } from "@skillsync/utils/learningPlans";
 import dayjs from "dayjs";
 import { ReactNode } from "react";
 
@@ -9,7 +9,7 @@ export const Layout = ({
   plan,
 }: {
   children: ReactNode;
-  plan: LearningPlanType;
+  plan: LearningPathType;
 }) => {
   const startDate = dayjs().subtract(1, "week").startOf("week");
   const currentWeek = Math.floor(dayjs().diff(startDate, "week"));

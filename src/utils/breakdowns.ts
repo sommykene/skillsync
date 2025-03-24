@@ -1,11 +1,9 @@
-import { Dayjs } from "dayjs";
-
 export type ActionType = {
   id: string;
   action: string;
   output: string;
   status: string;
-  dateCompleted?: Dayjs;
+  dateCompleted?: string;
 };
 
 export type WeekBreakdown = {
@@ -18,7 +16,7 @@ export type WeekBreakdown = {
     id: string;
     action: string;
     status: string;
-    dateCompleted?: Dayjs;
+    dateCompleted?: string;
   }[];
 };
 
@@ -26,28 +24,29 @@ export type FinalOutcome = {
   id: string;
   outcome: string;
   status: string;
-  dateCompleted?: Dayjs;
+  dateCompleted?: string;
 };
 
 export type PlanBreakdown = {
   id: string;
+  pathId: string;
   summary: string;
   title: string;
   startDate: string;
-  endDate?: string;
-  dateCompleted?: Dayjs;
+  dateCompleted?: string;
   weeks: WeekBreakdown[];
   finalOutcomes: FinalOutcome[];
 };
 
 export const breakdown: PlanBreakdown = {
   id: "tech_entrepreneurship_roadmap",
+  pathId: "15",
   title:
     "Tech Entrepreneurship - Product Management, Business Strategy, Fundraising",
   summary:
     "This 6-week roadmap provides a structured approach to mastering tech entrepreneurship. It covers product management, business strategy, fundraising, and execution—helping you build, launch, and scale a startup with clear goals, actionable tasks, and key deliverables. 🚀",
-  startDate: "2025-03-25",
-  endDate: "2025-05-06",
+  startDate: "2025-03-201",
+  dateCompleted: "2025-03-23",
   weeks: [
     {
       id: "week_1",
@@ -315,11 +314,11 @@ export const breakdown: PlanBreakdown = {
 
 export const breakdown2: PlanBreakdown = {
   id: "frontend-learning-plan",
+  pathId: "1",
   title: "Frontend Development Learning Plan",
   summary:
     "This structured 6-week plan helps build a solid frontend foundation in HTML, CSS, JavaScript, and React. Each week introduces key concepts, hands-on tasks, and a recap project to reinforce learning, ensuring steady progress and practical application.",
   startDate: "2025-03-25",
-  endDate: "2025-05-06",
   weeks: [
     {
       id: "week-1",

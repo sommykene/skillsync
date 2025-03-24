@@ -1,4 +1,4 @@
-import { CheckBadge } from "@skillsync/assets/CheckBadge";
+import { CheckBadgeIcon } from "@skillsync/assets/CheckBadgeIcon";
 import { WeekBreakdown } from "@skillsync/utils/breakdowns";
 
 export const WeekCard = ({ week }: { week: WeekBreakdown }) => {
@@ -13,7 +13,7 @@ export const WeekCard = ({ week }: { week: WeekBreakdown }) => {
         {week.actions.map((action) => (
           <div key={action.id} className="flex gap-2">
             <div className="flex items-center justify-center rounded-full">
-              <CheckBadge className="size-5" />
+              <CheckBadgeIcon className="size-5" />
             </div>
             <h5 className="text-md">{action.action}</h5>
           </div>
@@ -23,7 +23,7 @@ export const WeekCard = ({ week }: { week: WeekBreakdown }) => {
         {week.recap.map((item) => (
           <div key={item.id} className="flex gap-2">
             <div className="flex items-center justify-center rounded-full">
-              <CheckBadge className="size-5" solid />
+              <CheckBadgeIcon className="size-5" solid />
             </div>
             <h5 className="text-md">{item.action}</h5>
           </div>

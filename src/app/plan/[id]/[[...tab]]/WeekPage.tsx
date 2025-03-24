@@ -3,20 +3,14 @@
 import { NoPlanError } from "@skillsync/components/NoPlanError";
 import { WeekCard } from "@skillsync/components/WeekCard";
 import { breakdown } from "@skillsync/utils/breakdowns";
-import { learningPlans } from "@skillsync/utils/learningPlans";
+import { learningPaths } from "@skillsync/utils/learningPlans";
 import Link from "next/link";
 import { Layout } from "../../Layout";
 import { ActionCard } from "@skillsync/components/ActionCard";
 
-export const WeekPage = ({
-  id,
-  weekIndex,
-}: {
-  id: string;
-  weekIndex: number;
-}) => {
-  const plan = learningPlans.find((plan) => plan.id === id);
+export const WeekPage = ({ weekIndex }: { id: string; weekIndex: number }) => {
   const generatedPlan = breakdown;
+  const path = learningPaths.find((path) => path.id === generatedPlan.pathId);
   const isLoading = false;
   const isError = false;
   const error = { message: "no" };
@@ -42,7 +36,7 @@ export const WeekPage = ({
   //     enabled: isLoaded && isSignedIn,
   //   });
 
-  if (!plan) {
+  if (!path) {
     return <NoPlanError />;
   }
 
@@ -91,7 +85,7 @@ export const WeekPage = ({
 
   if (generatedPlan)
     return (
-      <Layout plan={plan}>
+      <Layout plan={path}>
         <div className="grid grid-cols-1 gap-4 w-[100%] md:grid-cols-[max(350px)_1fr] ">
           <div className="flex flex-col gap-4">
             <WeekCard key={week.id} week={week} />

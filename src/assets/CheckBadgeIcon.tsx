@@ -1,6 +1,6 @@
 "use client";
 
-export const CheckBadge = ({
+export const CheckBadgeIcon = ({
   className,
   solid,
 }: {

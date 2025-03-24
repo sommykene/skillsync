@@ -5,9 +5,9 @@ export const metadata: Metadata = {
   title: "Select Skills | SkillSync",
 };
 
-const Page = async ({ params }: { params: Promise<{ planId: string }> }) => {
-  const { planId } = await params;
-  return <SkillsPage id={planId} />;
+const Page = async ({ params }: { params: Promise<{ pathId: string }> }) => {
+  const { pathId } = await params;
+  return <SkillsPage id={pathId} />;
 };
 
 export default Page;

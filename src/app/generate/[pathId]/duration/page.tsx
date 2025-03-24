@@ -9,15 +9,15 @@ const Page = async ({
   params,
   searchParams,
 }: {
-  params: Promise<{ planId: string }>;
+  params: Promise<{ pathId: string }>;
   searchParams: Promise<{ topics?: string }>;
 }) => {
-  const { planId } = await params;
+  const { pathId } = await params;
   const search = await searchParams;
 
   return (
     <DurationPage
-      id={planId}
+      id={pathId}
       topics={search?.topics ? search.topics?.split(",") : []}
     />
   );

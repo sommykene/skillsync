@@ -3,7 +3,7 @@
 import { Badge } from "@skillsync/components/Badge";
 import { LearningPathCard } from "@skillsync/components/LearningPathCard";
 import { NoPlanError } from "@skillsync/components/NoPlanError";
-import { learningPlans } from "@skillsync/utils/learningPlans";
+import { learningPaths } from "@skillsync/utils/learningPlans";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -14,7 +14,7 @@ export const DurationPage = ({
   id: string;
   topics: string[];
 }) => {
-  const plan = learningPlans.find((plan) => plan.id === id);
+  const plan = learningPaths.find((path) => path.id === id);
   const [hours, setHours] = useState(10);
 
   if (!plan) {
@@ -49,7 +49,7 @@ export const DurationPage = ({
       <div className="flex flex-col items-center gap-4">
         <div className="flex flex-col gap-2 items-center">
           <label htmlFor="hours" className="font-semibold">
-            How many hours a day rougly can you commit?
+            How many hours a week roughly can you commit?
           </label>
           <div className="flex gap-2 items-end">
             <input

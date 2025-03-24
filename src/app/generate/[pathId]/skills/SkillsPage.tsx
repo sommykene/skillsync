@@ -3,12 +3,12 @@
 import { LearningPathCard } from "@skillsync/components/LearningPathCard";
 import { NoPlanError } from "@skillsync/components/NoPlanError";
 import { TopicsSelector } from "@skillsync/components/TopicsSelector";
-import { learningPlans } from "@skillsync/utils/learningPlans";
+import { learningPaths } from "@skillsync/utils/learningPlans";
 
 export const SkillsPage = ({ id }: { id: string }) => {
-  const plan = learningPlans.find((plan) => plan.id === id);
+  const path = learningPaths.find((path) => path.id === id);
 
-  if (!plan) {
+  if (!path) {
     return <NoPlanError />;
   }
   return (
@@ -28,9 +28,9 @@ export const SkillsPage = ({ id }: { id: string }) => {
         </p>
       </div>
 
-      <LearningPathCard plan={plan} className="max-w-[550px]" />
+      <LearningPathCard plan={path} className="max-w-[550px]" />
       <br />
-      <TopicsSelector topics={plan.keyTopics} planId={plan.id} />
+      <TopicsSelector topics={path.keyTopics} pathId={path.id} />
     </div>
   );
 };

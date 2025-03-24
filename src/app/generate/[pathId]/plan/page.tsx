@@ -9,19 +9,13 @@ const Page = async ({
   params,
   searchParams,
 }: {
-  params: Promise<{ planId: string }>;
+  params: Promise<{ pathId: string }>;
   searchParams: Promise<{ topics?: string; hours?: string }>;
 }) => {
-  const { planId } = await params;
+  const { pathId } = await params;
   const { topics, hours } = await searchParams;
 
-  return (
-    <GeneratedPlan
-      id={planId}
-      topics={topics}
-      hours={hours}
-    />
-  );
+  return <GeneratedPlan id={pathId} topics={topics} hours={hours} />;
 };
 
 export default Page;

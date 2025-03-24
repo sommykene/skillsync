@@ -6,23 +6,23 @@ import { RecapCard } from "@skillsync/components/RecapCard";
 import { WeekCard } from "@skillsync/components/WeekCard";
 import { PlanBreakdown } from "@skillsync/utils/breakdowns";
 import {
-  learningPlans,
-  LearningPlanType,
+  learningPaths,
+  LearningPathType,
 } from "@skillsync/utils/learningPlans";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
 const generatePlan = async ({
-  plan,
+  path,
   topics,
   hours,
 }: {
-  plan?: LearningPlanType;
+  path?: LearningPathType;
   topics: string;
   hours: string;
 }): Promise<PlanBreakdown> => {
-  if (!plan) {
-    throw new Error("Plan not found");
+  if (!path) {
+    throw new Error("Learning Path not found");
   }
 
   const response = await fetch("/api/generate-plan", {
@@ -31,7 +31,7 @@ const generatePlan = async ({
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      plan: plan.title,
+      path: path.title,
       topics: topics ?? "",
       hoursPerWeek: hours,
     }),
@@ -39,7 +39,7 @@ const generatePlan = async ({
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(errorData.error || "Failed to generate meal plan.");
+    throw new Error(errorData.error || "Failed to generate plan.");
   }
 
   return response.json();
@@ -55,17 +55,17 @@ export const GeneratedPlan = ({
   topics?: string;
 }) => {
   const { isLoaded, isSignedIn } = useUser();
-  const plan = learningPlans.find((plan) => plan.id === id);
+  const path = learningPaths.find((path) => path.id === id);
   const {
     data: generatedPlan,
     isLoading,
     isError,
     error,
   } = useQuery({
-    queryKey: ["generatedPlan", { plan, topics, hours }],
+    queryKey: ["generatedPlan", { path: path, topics, hours }],
     queryFn: async () => {
       const data = await generatePlan({
-        plan,
+        path: path,
         topics: topics ?? "",
         hours: hours ?? "10",
       });
@@ -76,7 +76,7 @@ export const GeneratedPlan = ({
     enabled: isLoaded && isSignedIn,
   });
 
-  if (!plan) {
+  if (!path) {
     return <NoPlanError />;
   }
 
