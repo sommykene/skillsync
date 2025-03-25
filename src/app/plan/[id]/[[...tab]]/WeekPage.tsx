@@ -90,12 +90,16 @@ export const WeekPage = ({ weekIndex }: { id: string; weekIndex: number }) => {
           <div className="flex flex-col gap-4">
             <WeekCard key={week.id} week={week} />
             <div className="flex justify-between">
-              <Link href={`week${weekIndex}`} className="button">
-                Week {weekIndex}
-              </Link>
-              <Link href={`week${weekIndex + 2}`} className="button">
-                Week {weekIndex + 2}
-              </Link>
+              {weekIndex > 0 && (
+                <Link href={`week${weekIndex}`} className="button">
+                  Week {weekIndex}
+                </Link>
+              )}
+              {weekIndex < 6 && (
+                <Link href={`week${weekIndex + 2}`} className="button">
+                  Week {weekIndex + 2}
+                </Link>
+              )}
             </div>
           </div>
           <div>
