@@ -3,14 +3,16 @@
 import { NoPlanError } from "@skillsync/components/NoPlanError";
 import { RecapCard } from "@skillsync/components/RecapCard";
 import { WeekCard } from "@skillsync/components/WeekCard";
-import { breakdown } from "@skillsync/utils/breakdowns";
-import { learningPaths } from "@skillsync/utils/learningPlans";
+import { breakdown, breakdown2 } from "@skillsync/utils/breakdowns";
+import { mockLearningPaths } from "@skillsync/utils/learningPlans";
 import Link from "next/link";
 import { Layout } from "../../Layout";
 
 export const PlanPage = ({ id }: { id: string }) => {
-  const generatedPlan = breakdown;
-  const path = learningPaths.find((path) => path.id === generatedPlan.pathId);
+  const generatedPlan = [breakdown, breakdown2].find((plan) => plan.id === id);
+  const path = mockLearningPaths.find(
+    (path) => path.id === generatedPlan?.pathId
+  );
   const isLoading = false;
   const isError = false;
   const error = { message: "no" };

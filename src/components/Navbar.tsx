@@ -68,6 +68,7 @@ export const Navbar = () => {
                 xmlns="http://www.w3.org/2000/svg">
                 {menuOpen ? (
                   <path
+                    data-testid="menu-open"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
@@ -75,6 +76,7 @@ export const Navbar = () => {
                   />
                 ) : (
                   <path
+                    data-testid="menu-closed"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
@@ -112,7 +114,7 @@ export const Navbar = () => {
 
       {/* mobile links */}
       {menuOpen && (
-        <ul className="flex flex-col gap-4 md:hidden mt-6  bg-background">
+        <ul data-testid="mobile-links-list" className="flex flex-col gap-4 md:hidden mt-6  bg-background">
           <li>
             <Link href="/">Home</Link>
           </li>

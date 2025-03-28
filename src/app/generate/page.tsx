@@ -1,5 +1,5 @@
 import { LearningPathCard } from "@skillsync/components/LearningPathCard";
-import { learningPaths } from "@skillsync/utils/learningPlans";
+import { mockLearningPaths } from "@skillsync/utils/learningPlans";
 
 export default function Home() {
   return (
@@ -20,7 +20,7 @@ export default function Home() {
         </p>
       </div>
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 w-[100%]">
-        {learningPaths.map((plan) => (
+        {mockLearningPaths.map((plan) => (
           <LearningPathCard
             key={plan.title}
             plan={plan}

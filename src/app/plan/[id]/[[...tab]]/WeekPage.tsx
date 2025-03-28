@@ -3,14 +3,16 @@
 import { NoPlanError } from "@skillsync/components/NoPlanError";
 import { WeekCard } from "@skillsync/components/WeekCard";
 import { breakdown } from "@skillsync/utils/breakdowns";
-import { learningPaths } from "@skillsync/utils/learningPlans";
+import { mockLearningPaths } from "@skillsync/utils/learningPlans";
 import Link from "next/link";
 import { Layout } from "../../Layout";
 import { ActionCard } from "@skillsync/components/ActionCard";
 
 export const WeekPage = ({ weekIndex }: { id: string; weekIndex: number }) => {
   const generatedPlan = breakdown;
-  const path = learningPaths.find((path) => path.id === generatedPlan.pathId);
+  const path = mockLearningPaths.find(
+    (path) => path.id === generatedPlan.pathId
+  );
   const isLoading = false;
   const isError = false;
   const error = { message: "no" };

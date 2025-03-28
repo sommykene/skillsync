@@ -3,7 +3,7 @@
 import { Badge } from "@skillsync/components/Badge";
 import { LearningPathCard } from "@skillsync/components/LearningPathCard";
 import { NoPlanError } from "@skillsync/components/NoPlanError";
-import { learningPaths } from "@skillsync/utils/learningPlans";
+import { mockLearningPaths } from "@skillsync/utils/learningPlans";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -14,7 +14,7 @@ export const DurationPage = ({
   id: string;
   topics: string[];
 }) => {
-  const plan = learningPaths.find((path) => path.id === id);
+  const plan = mockLearningPaths.find((path) => path.id === id);
   const [hours, setHours] = useState(10);
 
   if (!plan) {

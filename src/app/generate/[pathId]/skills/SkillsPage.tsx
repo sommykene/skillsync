@@ -3,10 +3,10 @@
 import { LearningPathCard } from "@skillsync/components/LearningPathCard";
 import { NoPlanError } from "@skillsync/components/NoPlanError";
 import { TopicsSelector } from "@skillsync/components/TopicsSelector";
-import { learningPaths } from "@skillsync/utils/learningPlans";
+import { mockLearningPaths } from "@skillsync/utils/learningPlans";
 
 export const SkillsPage = ({ id }: { id: string }) => {
-  const path = learningPaths.find((path) => path.id === id);
+  const path = mockLearningPaths.find((path) => path.id === id);
 
   if (!path) {
     return <NoPlanError />;

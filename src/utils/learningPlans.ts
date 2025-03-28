@@ -5,7 +5,7 @@ export type LearningPathType = {
   keyTopics: string[];
 };
 
-export const learningPaths: LearningPathType[] = [
+export const mockLearningPaths: LearningPathType[] = [
   {
     id: "1",
     title: "Frontend Development",

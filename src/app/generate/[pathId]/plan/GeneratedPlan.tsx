@@ -6,7 +6,7 @@ import { RecapCard } from "@skillsync/components/RecapCard";
 import { WeekCard } from "@skillsync/components/WeekCard";
 import { PlanBreakdown } from "@skillsync/utils/breakdowns";
 import {
-  learningPaths,
+  mockLearningPaths,
   LearningPathType,
 } from "@skillsync/utils/learningPlans";
 import { useQuery } from "@tanstack/react-query";
@@ -55,7 +55,7 @@ export const GeneratedPlan = ({
   topics?: string;
 }) => {
   const { isLoaded, isSignedIn } = useUser();
-  const path = learningPaths.find((path) => path.id === id);
+  const path = mockLearningPaths.find((path) => path.id === id);
   const {
     data: generatedPlan,
     isLoading,
