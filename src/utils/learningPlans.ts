@@ -1,16 +1,11 @@
-export type LearningPathType = {
-  id: string;
-  title: string;
-  focus: string;
-  keyTopics: string[];
-};
+import { LearningPathType } from "@skillsync/app/types/plan";
 
 export const mockLearningPaths: LearningPathType[] = [
   {
     id: "1",
     title: "Frontend Development",
     focus: "Focus on building the visual aspects of websites and applications.",
-    keyTopics: [
+    topics: [
       "HTML",
       "CSS",
       "JavaScript",
@@ -27,7 +22,7 @@ export const mockLearningPaths: LearningPathType[] = [
     title: "Backend Development",
     focus:
       "Focus on server-side logic, databases, and application architecture.",
-    keyTopics: [
+    topics: [
       "Node.js",
       "Python (Django, Flask)",
       "Ruby on Rails",
@@ -44,7 +39,7 @@ export const mockLearningPaths: LearningPathType[] = [
     id: "3",
     title: "Full-Stack Development",
     focus: "Combination of frontend and backend development.",
-    keyTopics: [
+    topics: [
       "JavaScript (React + Node.js)",
       "MERN Stack",
       "MEAN Stack",
@@ -57,7 +52,7 @@ export const mockLearningPaths: LearningPathType[] = [
     title: "Data Science & Machine Learning",
     focus:
       "Focus on working with data, statistics, and machine learning models.",
-    keyTopics: [
+    topics: [
       "Python",
       "R",
       "Pandas",
@@ -74,7 +69,7 @@ export const mockLearningPaths: LearningPathType[] = [
     id: "5",
     title: "Artificial Intelligence (AI)",
     focus: "Focus on developing intelligent systems and algorithms.",
-    keyTopics: [
+    topics: [
       "Machine Learning",
       "Neural Networks",
       "Computer Vision",
@@ -88,7 +83,7 @@ export const mockLearningPaths: LearningPathType[] = [
     title: "DevOps & Cloud Engineering",
     focus:
       "Focus on the collaboration between development and operations, and managing cloud infrastructure.",
-    keyTopics: [
+    topics: [
       "Docker",
       "Kubernetes",
       "CI/CD",
@@ -104,7 +99,7 @@ export const mockLearningPaths: LearningPathType[] = [
     title: "Cybersecurity",
     focus:
       "Focus on protecting systems, networks, and data from security breaches.",
-    keyTopics: [
+    topics: [
       "Ethical Hacking",
       "Penetration Testing",
       "Network Security",
@@ -119,7 +114,7 @@ export const mockLearningPaths: LearningPathType[] = [
     title: "Mobile Development",
     focus:
       "Focus on building applications for mobile devices (iOS and Android).",
-    keyTopics: [
+    topics: [
       "Swift (iOS)",
       "Kotlin (Android)",
       "React Native",
@@ -132,7 +127,7 @@ export const mockLearningPaths: LearningPathType[] = [
     id: "9",
     title: "Game Development",
     focus: "Focus on designing and building interactive video games.",
-    keyTopics: [
+    topics: [
       "Unity",
       "Unreal Engine",
       "C#",
@@ -148,7 +143,7 @@ export const mockLearningPaths: LearningPathType[] = [
     title: "Blockchain Development",
     focus:
       "Focus on building decentralized applications and systems using blockchain technology.",
-    keyTopics: [
+    topics: [
       "Ethereum",
       "Solidity",
       "Smart Contracts",
@@ -163,7 +158,7 @@ export const mockLearningPaths: LearningPathType[] = [
     title: "Software Engineering",
     focus:
       "Focus on the engineering principles of building robust, scalable software systems.",
-    keyTopics: [
+    topics: [
       "Algorithms",
       "Data Structures",
       "System Design",
@@ -178,7 +173,7 @@ export const mockLearningPaths: LearningPathType[] = [
     title: "UX/UI Design",
     focus:
       "Focus on the user experience and interface design for applications and websites.",
-    keyTopics: [
+    topics: [
       "Wireframing",
       "Prototyping",
       "User Research",
@@ -192,7 +187,7 @@ export const mockLearningPaths: LearningPathType[] = [
     id: "13",
     title: "Augmented Reality (AR) & Virtual Reality (VR)",
     focus: "Focus on immersive experiences and applications in AR and VR.",
-    keyTopics: [
+    topics: [
       "Unity",
       "3D Modeling",
       "XR Design",
@@ -207,7 +202,7 @@ export const mockLearningPaths: LearningPathType[] = [
     title: "IoT (Internet of Things)",
     focus:
       "Focus on the connection of physical devices to the internet and cloud platforms.",
-    keyTopics: [
+    topics: [
       "Sensors",
       "Raspberry Pi",
       "Arduino",
@@ -221,7 +216,7 @@ export const mockLearningPaths: LearningPathType[] = [
     id: "15",
     title: "Tech Entrepreneurship",
     focus: "Focus on building and scaling tech businesses.",
-    keyTopics: [
+    topics: [
       "Product Management",
       "Business Strategy",
       "Fundraising",

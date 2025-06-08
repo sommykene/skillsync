@@ -30,7 +30,7 @@ export const SkillsPage = ({ id }: { id: string }) => {
 
       <LearningPathCard plan={path} className="max-w-[550px]" />
       <br />
-      <TopicsSelector topics={path.keyTopics} pathId={path.id} />
+      <TopicsSelector topics={path.topics} pathId={path.id} />
     </div>
   );
 };

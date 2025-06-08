@@ -85,19 +85,25 @@ export const WeekPage = ({ weekIndex }: { id: string; weekIndex: number }) => {
     );
   }
 
-  if (generatedPlan)
+  if (generatedPlan) {
+    const weekClassName =
+      weekIndex === 0
+        ? "justify-end"
+        : weekIndex === 5
+        ? "justify-start"
+        : "justify-between";
     return (
       <Layout plan={path}>
         <div className="grid grid-cols-1 gap-4 w-[100%] md:grid-cols-[max(350px)_1fr] ">
           <div className="flex flex-col gap-4">
             <WeekCard key={week.id} week={week} />
-            <div className="flex justify-between">
+            <div className={`flex ${weekClassName}`}>
               {weekIndex > 0 && (
                 <Link href={`week${weekIndex}`} className="button">
                   Week {weekIndex}
                 </Link>
               )}
-              {weekIndex < 6 && (
+              {weekIndex < 5 && (
                 <Link href={`week${weekIndex + 2}`} className="button">
                   Week {weekIndex + 2}
                 </Link>
@@ -115,6 +121,7 @@ export const WeekPage = ({ weekIndex }: { id: string; weekIndex: number }) => {
         <br />
       </Layout>
     );
+  }
 
   // catch all
   return (

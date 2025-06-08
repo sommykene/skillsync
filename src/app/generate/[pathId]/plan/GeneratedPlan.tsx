@@ -1,14 +1,11 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
+import { LearningPathType, PlanBreakdown } from "@skillsync/app/types/plan";
 import { NoPlanError } from "@skillsync/components/NoPlanError";
 import { RecapCard } from "@skillsync/components/RecapCard";
 import { WeekCard } from "@skillsync/components/WeekCard";
-import { PlanBreakdown } from "@skillsync/utils/breakdowns";
-import {
-  mockLearningPaths,
-  LearningPathType,
-} from "@skillsync/utils/learningPlans";
+import { mockLearningPaths } from "@skillsync/utils/learningPlans";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 

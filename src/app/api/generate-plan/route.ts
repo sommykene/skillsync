@@ -1,4 +1,4 @@
-import { PlanBreakdown } from "@skillsync/utils/breakdowns";
+import { PlanBreakdown } from "@skillsync/app/types/plan";
 import { getPrompt } from "@skillsync/utils/prompt";
 import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
@@ -23,7 +23,7 @@ export async function POST(request: Request) {
         },
         {
           role: "user",
-          content: getPrompt({  path, topics, hoursPerWeek }),
+          content: getPrompt({ path, topics, hoursPerWeek }),
         },
       ],
       response_format: { type: "json_object" },

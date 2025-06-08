@@ -1,42 +1,4 @@
-export type ActionType = {
-  id: string;
-  action: string;
-  output: string;
-  status: string;
-  dateCompleted?: string;
-};
-
-export type WeekBreakdown = {
-  id: string;
-  weekNumber: string;
-  objective: string;
-  goal: string;
-  actions: ActionType[];
-  recap: {
-    id: string;
-    action: string;
-    status: string;
-    dateCompleted?: string;
-  }[];
-};
-
-export type FinalOutcome = {
-  id: string;
-  outcome: string;
-  status: string;
-  dateCompleted?: string;
-};
-
-export type PlanBreakdown = {
-  id: string;
-  pathId: string;
-  summary: string;
-  title: string;
-  startDate: string;
-  dateCompleted?: string;
-  weeks: WeekBreakdown[];
-  finalOutcomes: FinalOutcome[];
-};
+import { PlanBreakdown } from "@skillsync/app/types/plan";
 
 export const breakdown: PlanBreakdown = {
   id: "tech_entrepreneurship_roadmap",

@@ -45,7 +45,7 @@ const mockPath = {
   id: "1",
   title: "Frontend Development",
   focus: "Focus on building the visual aspects of websites and applications.",
-  keyTopics: [
+  topics: [
     "HTML",
     "CSS",
     "JavaScript",
