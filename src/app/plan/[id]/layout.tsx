@@ -22,9 +22,8 @@ export default async function Layout({
 }>) {
   const { id } = await params;
   const queryClient = new QueryClient();
-
   await queryClient.prefetchQuery({
-    queryKey: ["plan", { id: id }],
+    queryKey: ["plan", { id }],
     queryFn: () => getPlanById({ planId: id }),
   });
 

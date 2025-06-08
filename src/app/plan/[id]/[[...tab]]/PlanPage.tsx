@@ -7,15 +7,17 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { Layout } from "../../Layout";
 import { getPlanById } from "../../queries/getPlanById";
+import { useSupabaseClient } from "@skillsync/hooks/useSupabaseClient";
 
 export const PlanPage = ({ planId }: { planId: string }) => {
+  const { client } = useSupabaseClient();
   const {
     isLoading,
     data: plan,
     error,
   } = useQuery({
     queryKey: ["plan", { id: planId }],
-    queryFn: () => getPlanById({ planId }),
+    queryFn: () => getPlanById({ planId, client }),
   });
 
   if (isLoading) {

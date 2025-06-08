@@ -14,18 +14,20 @@ export type ActionType = {
   notes?: string;
 };
 
+export type RecapType = {
+  id: string;
+  action: string;
+  status: statusEnum;
+  dateCompleted?: string;
+};
+
 export type WeekBreakdownType = {
   id: string;
   weekNumber: string;
   objective: string;
   goal: string;
   actions: ActionType[];
-  recap: {
-    id: string;
-    action: string;
-    status: statusEnum;
-    dateCompleted?: string;
-  }[];
+  recap: RecapType[];
 };
 
 export type FinalOutcomeType = {

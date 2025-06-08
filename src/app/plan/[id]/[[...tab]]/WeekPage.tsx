@@ -1,12 +1,13 @@
 "use client";
 
-import { ActionCard } from "@skillsync/components/ActionCard";
 import { NoPlanError } from "@skillsync/components/NoPlanError";
 import { WeekCard } from "@skillsync/components/WeekCard";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { Layout } from "../../Layout";
 import { getPlanById } from "../../queries/getPlanById";
+import { ActionCard } from "../../components/ActionCard";
+import { useSupabaseClient } from "@skillsync/hooks/useSupabaseClient";
 
 export const WeekPage = ({
   weekIndex,
@@ -15,13 +16,14 @@ export const WeekPage = ({
   planId: string;
   weekIndex: number;
 }) => {
+  const { client } = useSupabaseClient();
   const {
     isLoading,
     data: plan,
     error,
   } = useQuery({
     queryKey: ["plan", { id: planId }],
-    queryFn: () => getPlanById({ planId }),
+    queryFn: () => getPlanById({ planId, client }),
   });
 
   if (!plan) {
@@ -98,9 +100,17 @@ export const WeekPage = ({
           </div>
           <div>
             <div className="flex flex-col gap-4">
-              {week.actions.map((action) => {
-                return <ActionCard key={action.id} action={action} />;
-              })}
+              {week.actions
+                .sort((a1, a2) => a1.action.localeCompare(a2.action))
+                .map((action) => {
+                  return (
+                    <ActionCard
+                      key={action.id}
+                      action={action}
+                      planId={planId}
+                    />
+                  );
+                })}
             </div>
           </div>
         </div>

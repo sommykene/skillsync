@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
-import { ActionCard } from "../ActionCard";
-import { ActionType } from "@skillsync/utils/breakdowns";
+import { ActionCard } from "./ActionCard";
+import { ActionType, statusEnum } from "@skillsync/app/types/plan";
 
 describe("ActionCard Component", () => {
   const mockAction: ActionType = {
     id: "id",
-    status: "Not Started",
+    status: statusEnum.todo,
     action: "Test Action",
     output: "Test Output",
   };
