@@ -1,4 +1,4 @@
-import { PlanBreakdown } from "@skillsync/utils/breakdowns";
+import { PlanType } from "@skillsync/app/types/plan";
 import dayjs from "dayjs";
 import Link from "next/link";
 
@@ -6,7 +6,7 @@ export const PlanCard = ({
   plan,
   className,
 }: {
-  plan: PlanBreakdown;
+  plan: PlanType;
   className?: string;
 }) => {
   return (

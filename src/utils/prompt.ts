@@ -19,7 +19,7 @@ export const getPrompt = ({ path, topics, hoursPerWeek }: PromptProps) => {
 
     type WeekBreakdown = {
       id: string;
-      weekNumber: string;
+      weekNumber: int;
       objective: string;
       goal: string;
       actions: {

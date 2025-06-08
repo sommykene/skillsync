@@ -1,46 +1,34 @@
 "use client";
 
+import { ActionCard } from "@skillsync/components/ActionCard";
 import { NoPlanError } from "@skillsync/components/NoPlanError";
 import { WeekCard } from "@skillsync/components/WeekCard";
-import { breakdown } from "@skillsync/utils/breakdowns";
-import { mockLearningPaths } from "@skillsync/utils/learningPlans";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { Layout } from "../../Layout";
-import { ActionCard } from "@skillsync/components/ActionCard";
+import { getPlanById } from "../../queries/getPlanById";
 
-export const WeekPage = ({ weekIndex }: { id: string; weekIndex: number }) => {
-  const generatedPlan = breakdown;
-  const path = mockLearningPaths.find(
-    (path) => path.id === generatedPlan.pathId
-  );
-  const isLoading = false;
-  const isError = false;
-  const error = { message: "no" };
-  const week = generatedPlan.weeks[weekIndex];
-  //   const { isLoaded, isSignedIn } = useUser();
-  //   const {
-  //     data: generatedPlan,
-  //     isLoading,
-  //     isError,
-  //     error,
-  //   } = useQuery({
-  //     queryKey: ["generatedPlan", { plan, topics, hours }],
-  //     queryFn: async () => {
-  //       const data = await generatePlan({
-  //         plan,
-  //         topics: topics ?? "",
-  //         hours: hours ?? "10",
-  //       });
-  //       return data;
-  //     },
-  //     staleTime: Infinity,
-  //     retry: false,
-  //     enabled: isLoaded && isSignedIn,
-  //   });
+export const WeekPage = ({
+  weekIndex,
+  planId,
+}: {
+  planId: string;
+  weekIndex: number;
+}) => {
+  const {
+    isLoading,
+    data: plan,
+    error,
+  } = useQuery({
+    queryKey: ["plan", { id: planId }],
+    queryFn: () => getPlanById({ planId }),
+  });
 
-  if (!path) {
+  if (!plan) {
     return <NoPlanError />;
   }
+
+  const week = plan.weeks[weekIndex];
 
   if (isLoading) {
     return (
@@ -67,7 +55,7 @@ export const WeekPage = ({ weekIndex }: { id: string; weekIndex: number }) => {
     );
   }
 
-  if (isError) {
+  if (error && !plan) {
     return (
       <div className="min-h-screen flex items-center justify-start flex-col mb-[100px] relative">
         <div className="mb-8">
@@ -77,15 +65,13 @@ export const WeekPage = ({ weekIndex }: { id: string; weekIndex: number }) => {
               Plan
             </span>
           </h1>
-          <h2 className="text-lg font-semibold text-center text-text">
-            {error.message}
-          </h2>
+          <h2 className="text-lg font-semibold text-center text-text">Error</h2>
         </div>
       </div>
     );
   }
 
-  if (generatedPlan) {
+  if (plan) {
     const weekClassName =
       weekIndex === 0
         ? "justify-end"
@@ -93,7 +79,7 @@ export const WeekPage = ({ weekIndex }: { id: string; weekIndex: number }) => {
         ? "justify-start"
         : "justify-between";
     return (
-      <Layout plan={path}>
+      <Layout plan={plan}>
         <div className="grid grid-cols-1 gap-4 w-[100%] md:grid-cols-[max(350px)_1fr] ">
           <div className="flex flex-col gap-4">
             <WeekCard key={week.id} week={week} />

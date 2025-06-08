@@ -1,6 +1,6 @@
-import { PlanBreakdown } from "@skillsync/app/types/plan";
+import { PlanBreakdownType } from "@skillsync/app/types/plan";
 
-export const breakdown: PlanBreakdown = {
+export const breakdown: PlanBreakdownType = {
   id: "tech_entrepreneurship_roadmap",
   pathId: "15",
   title:
@@ -274,7 +274,7 @@ export const breakdown: PlanBreakdown = {
   ],
 };
 
-export const breakdown2: PlanBreakdown = {
+export const breakdown2: PlanBreakdownType = {
   id: "frontend-learning-plan",
   pathId: "1",
   title: "Frontend Development Learning Plan",

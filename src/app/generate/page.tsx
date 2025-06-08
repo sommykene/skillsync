@@ -6,7 +6,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 
-export default async function Home() {
+export default async function Page() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({

@@ -3,43 +3,20 @@
 import { NoPlanError } from "@skillsync/components/NoPlanError";
 import { RecapCard } from "@skillsync/components/RecapCard";
 import { WeekCard } from "@skillsync/components/WeekCard";
-import { breakdown, breakdown2 } from "@skillsync/utils/breakdowns";
-import { mockLearningPaths } from "@skillsync/utils/learningPlans";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { Layout } from "../../Layout";
+import { getPlanById } from "../../queries/getPlanById";
 
-export const PlanPage = ({ id }: { id: string }) => {
-  const generatedPlan = [breakdown, breakdown2].find((plan) => plan.id === id);
-  const path = mockLearningPaths.find(
-    (path) => path.id === generatedPlan?.pathId
-  );
-  const isLoading = false;
-  const isError = false;
-  const error = { message: "no" };
-  //   const { isLoaded, isSignedIn } = useUser();
-  //   const {
-  //     data: generatedPlan,
-  //     isLoading,
-  //     isError,
-  //     error,
-  //   } = useQuery({
-  //     queryKey: ["generatedPlan", { plan, topics, hours }],
-  //     queryFn: async () => {
-  //       const data = await generatePlan({
-  //         plan,
-  //         topics: topics ?? "",
-  //         hours: hours ?? "10",
-  //       });
-  //       return data;
-  //     },
-  //     staleTime: Infinity,
-  //     retry: false,
-  //     enabled: isLoaded && isSignedIn,
-  //   });
-
-  if (!path) {
-    return <NoPlanError />;
-  }
+export const PlanPage = ({ planId }: { planId: string }) => {
+  const {
+    isLoading,
+    data: plan,
+    error,
+  } = useQuery({
+    queryKey: ["plan", { id: planId }],
+    queryFn: () => getPlanById({ planId }),
+  });
 
   if (isLoading) {
     return (
@@ -66,7 +43,11 @@ export const PlanPage = ({ id }: { id: string }) => {
     );
   }
 
-  if (isError) {
+  if (!plan) {
+    return <NoPlanError />;
+  }
+
+  if (error) {
     return (
       <div className="min-h-screen flex items-center justify-start flex-col mb-[100px] relative">
         <div className="mb-8">
@@ -76,17 +57,15 @@ export const PlanPage = ({ id }: { id: string }) => {
               Plan
             </span>
           </h1>
-          <h2 className="text-lg font-semibold text-center text-text">
-            {error.message}
-          </h2>
+          <h2 className="text-lg font-semibold text-center text-text">Error</h2>
         </div>
       </div>
     );
   }
 
-  if (generatedPlan)
+  if (plan)
     return (
-      <Layout plan={path}>
+      <Layout plan={plan}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-[100%]">
           <div
             className={`flex flex-col gap-2 items-center justify-center text-center bg-white rounded-md py-4  px-8 hover:drop-shadow-md text-primary cursor-pointer w-[100%]`}>
@@ -99,16 +78,16 @@ export const PlanPage = ({ id }: { id: string }) => {
               deliverables. 🚀
             </p>
           </div>
-          <RecapCard recap={generatedPlan.finalOutcomes} />
+          <RecapCard recap={plan.finalOutcomes} />
         </div>
         <br />
         {/* <LearningPathCard plan={plan} className="max-w-[550px] mb-8" /> */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {generatedPlan.weeks.map((week, index) => {
+          {plan.weeks.map((week, index) => {
             return (
               <Link
                 key={week.id}
-                href={`/plan/${id}/week${index + 1}`}
+                href={`/plan/${planId}/week${index + 1}`}
                 className="h-[100%]">
                 <WeekCard week={week} />
               </Link>

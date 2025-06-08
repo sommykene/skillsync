@@ -11,7 +11,7 @@ export const NoPlanError = () => {
           </span>
         </h1>
         <p className="text-lg font-bold text-center">
-          Oooop, learning plan not found
+          Oooop, learning path not found
         </p>
       </div>
     </div>

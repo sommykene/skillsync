@@ -19,11 +19,11 @@ const Page = async ({
 
     return (
       <WeekPage
-        id={id}
+        planId={id}
         weekIndex={weekNumber > 6 ? 0 : Math.max(weekNumber - 1, 0)}
       />
     );
   }
-  return <PlanPage id={id} />;
+  return <PlanPage planId={id} />;
 };
 export default Page;

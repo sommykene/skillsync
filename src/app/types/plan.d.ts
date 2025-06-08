@@ -9,12 +9,12 @@ export type ActionType = {
   id: string;
   action: string;
   output: string;
-  status: string;
+  status: statusEnum;
   dateCompleted?: string;
   notes?: string;
 };
 
-export type WeekBreakdown = {
+export type WeekBreakdownType = {
   id: string;
   weekNumber: string;
   objective: string;
@@ -23,27 +23,37 @@ export type WeekBreakdown = {
   recap: {
     id: string;
     action: string;
-    status: string;
+    status: statusEnum;
     dateCompleted?: string;
   }[];
 };
 
-export type FinalOutcome = {
+export type FinalOutcomeType = {
   id: string;
   outcome: string;
-  status: string;
+  status: statusEnum;
   dateCompleted?: string;
 };
 
-export type PlanBreakdown = {
+export type PlanType = {
+  id: string;
+  pathId: string;
+  selectedTopics: string[];
+  summary: string;
+  title: string;
+  startDate: string;
+  dateCompleted?: string;
+};
+
+export type PlanBreakdownType = {
   id: string;
   pathId: string;
   summary: string;
   title: string;
   startDate: string;
   dateCompleted?: string;
-  weeks: WeekBreakdown[];
-  finalOutcomes: FinalOutcome[];
+  weeks: WeekBreakdownType[];
+  finalOutcomes: FinalOutcomeType[];
 };
 
 export type LearningPathType = {
@@ -52,3 +62,11 @@ export type LearningPathType = {
   focus: string;
   topics: string[];
 };
+
+export enum statusEnum {
+  todo = "todo",
+  pending = "pending",
+  inProgress = "inProgress",
+  completed = "completed",
+  skipped = "skipped",
+}

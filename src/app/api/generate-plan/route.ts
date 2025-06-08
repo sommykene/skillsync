@@ -1,4 +1,4 @@
-import { PlanBreakdown } from "@skillsync/app/types/plan";
+import { PlanBreakdownType } from "@skillsync/app/types/plan";
 import { getPrompt } from "@skillsync/utils/prompt";
 import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
     // Optionally, perform additional validation on the structure here
 
     // Return the parsed plan
-    return NextResponse.json({ ...(parsedPlan as PlanBreakdown) });
+    return NextResponse.json({ ...(parsedPlan as PlanBreakdownType) });
   } catch (error) {
     console.error("Error generating plan:", error);
     return NextResponse.json(

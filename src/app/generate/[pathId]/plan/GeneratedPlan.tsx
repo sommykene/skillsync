@@ -1,46 +1,16 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import { LearningPathType, PlanBreakdown } from "@skillsync/app/types/plan";
 import { NoPlanError } from "@skillsync/components/NoPlanError";
 import { RecapCard } from "@skillsync/components/RecapCard";
 import { WeekCard } from "@skillsync/components/WeekCard";
-import { mockLearningPaths } from "@skillsync/utils/learningPlans";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-
-const generatePlan = async ({
-  path,
-  topics,
-  hours,
-}: {
-  path?: LearningPathType;
-  topics: string;
-  hours: string;
-}): Promise<PlanBreakdown> => {
-  if (!path) {
-    throw new Error("Learning Path not found");
-  }
-
-  const response = await fetch("/api/generate-plan", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      path: path.title,
-      topics: topics ?? "",
-      hoursPerWeek: hours,
-    }),
-  });
-
-  if (!response.ok) {
-    const errorData = await response.json();
-    throw new Error(errorData.error || "Failed to generate plan.");
-  }
-
-  return response.json();
-};
+import { getLearningPath } from "../../queries/getLearningPath";
+import { generatePlan } from "../../queries/generatePlan";
+import { savePlan } from "../../queries/savePlan";
+import { useSupabaseClient } from "@skillsync/hooks/useSupabaseClient";
+import { redirect } from "next/navigation";
 
 export const GeneratedPlan = ({
   id,
@@ -52,14 +22,20 @@ export const GeneratedPlan = ({
   topics?: string;
 }) => {
   const { isLoaded, isSignedIn } = useUser();
-  const path = mockLearningPaths.find((path) => path.id === id);
+  const { client } = useSupabaseClient();
+
+  const { data: path, error: pathError } = useQuery({
+    queryKey: ["learningPath", { id }],
+    queryFn: () => getLearningPath({ id }),
+  });
+
   const {
     data: generatedPlan,
     isLoading,
     isError,
     error,
   } = useQuery({
-    queryKey: ["generatedPlan", { path: path, topics, hours }],
+    queryKey: ["generatedPlan", { pathId: path?.id, topics, hours }],
     queryFn: async () => {
       const data = await generatePlan({
         path: path,
@@ -70,10 +46,31 @@ export const GeneratedPlan = ({
     },
     staleTime: Infinity,
     retry: false,
-    enabled: isLoaded && isSignedIn,
+    enabled: isLoaded && isSignedIn && path !== undefined && !pathError,
   });
 
-  if (!path) {
+  const {
+    data: savedData,
+    error: saveError,
+    mutate,
+  } = useMutation({
+    mutationKey: ["savePlan"],
+    mutationFn: async () => {
+      if (!generatedPlan) throw new Error("No plan to save");
+      const jjj = await savePlan(
+        id,
+        generatedPlan,
+        topics?.split(", "),
+        client
+      );
+      return jjj;
+    },
+    onSuccess: (data) => {
+      redirect(`/plan/${data.id}`);
+    },
+  });
+
+  if (!path || pathError) {
     return <NoPlanError />;
   }
 
@@ -157,9 +154,9 @@ export const GeneratedPlan = ({
           ))}
         </div>
         <br />
-        <Link href={"/"} className={`button mt-6`}>
-          Continue
-        </Link>
+        <button onClick={() => mutate()} className={`button mt-6`}>
+          Save
+        </button>
         <br />
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
