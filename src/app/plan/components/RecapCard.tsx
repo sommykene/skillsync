@@ -1,26 +1,24 @@
-import { ActionType } from "@skillsync/app/types/plan";
+import { RecapType } from "@skillsync/app/types/plan";
 import { useSupabaseClient } from "@skillsync/hooks/useSupabaseClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-import { updateActionStatus } from "../queries/updateActionStatus";
+import { updateRecapStatus } from "../queries/updateRecapStatus";
 
-export const ActionCard = ({
+export const RecapCard = ({
   planId,
-  action,
+  recap,
   className,
 }: {
   planId: string;
-  action: ActionType;
+  recap: RecapType;
   className?: string;
 }) => {
-  const [collapsed, setCollapsed] = useState(true);
   const { client } = useSupabaseClient();
   const queryClient = useQueryClient();
 
   const { error, mutate } = useMutation({
-    mutationKey: ["updateActionStatus", action.id],
+    mutationKey: ["updateRecapStatus", recap.id],
     mutationFn: async (newStatus: string) => {
-      return await updateActionStatus(action.id, newStatus, client);
+      return await updateRecapStatus(recap.id, newStatus, client);
     },
     onSuccess: async () => {
       await queryClient.invalidateQueries({
@@ -32,23 +30,19 @@ export const ActionCard = ({
 
   return (
     <div
-      data-testid="action-card"
-      className={`bg-white rounded-md p-4 hover:drop-shadow-md text-primary cursor-pointer ${className}`}>
+      data-testid="recap-card"
+      className={`bg-accent/20 rounded-md p-4 hover:drop-shadow-md text-primary cursor-pointer ${className}`}>
       <div className="flex justify-between gap-2">
-        <div
-          data-testid="action-card-header"
-          onClick={() => setCollapsed(!collapsed)}
-          className="flex-col w-full">
-          <h3 className="text-lg font-bold">{action.action}</h3>
-          <p className="text-text">{action.output} </p>
+        <div data-testid="recap-card-header" className="flex-col w-full">
+          <h3 className="text-lg font-bold">{recap.action}</h3>
         </div>
         <div>
           <select
-            defaultValue={action.status}
+            defaultValue={recap.status}
             className="select select-bordered"
             onChange={(e) => {
               const newStatus = e.target.value;
-              if (newStatus !== action.status) {
+              if (newStatus !== recap.status) {
                 mutate(newStatus);
               }
             }}>
@@ -59,13 +53,6 @@ export const ActionCard = ({
           </select>
         </div>
       </div>
-      {!collapsed && (
-        <div>
-          <p className="text-sm text-text mt-2">
-            {action.notes || "Add notes here..."}
-          </p>
-        </div>
-      )}
     </div>
   );
 };

@@ -2,8 +2,8 @@
 
 import { useUser } from "@clerk/nextjs";
 import { NoPlanError } from "@skillsync/components/NoPlanError";
-import { RecapCard } from "@skillsync/components/RecapCard";
-import { WeekCard } from "@skillsync/components/WeekCard";
+import { FinalOutcomesCard } from "@skillsync/components/FinalOutcomesCard";
+import { WeekCard } from "@skillsync/app/plan/components/WeekCard";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { getLearningPath } from "../../queries/getLearningPath";
@@ -144,7 +144,7 @@ export const GeneratedPlan = ({
               deliverables. 🚀
             </p>
           </div>
-          <RecapCard recap={generatedPlan.finalOutcomes} />
+          <FinalOutcomesCard recap={generatedPlan.finalOutcomes} />
         </div>
         <br />
         {/* <LearningPathCard plan={plan} className="max-w-[550px] mb-8" /> */}

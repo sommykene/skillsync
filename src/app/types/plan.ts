@@ -1,10 +1,3 @@
-import { PlanBreakdown } from "@skillsync/utils/breakdowns";
-
-interface PlanResponse {
-  plan?: PlanBreakdown;
-  error?: string;
-}
-
 export type ActionType = {
   id: string;
   action: string;

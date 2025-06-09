@@ -30,7 +30,10 @@ export const WeekCard = ({ week }: { week: WeekBreakdownType }) => {
         {week.recap.map((item: RecapType) => (
           <div key={item.id} className="flex gap-2">
             <div className="flex items-center justify-center rounded-full">
-              <CheckBadgeIcon className="size-5" solid />
+              <CheckBadgeIcon
+                className="size-5"
+                solid={item.status === "completed"}
+              />
             </div>
             <h5 className="text-md">{item.action}</h5>
           </div>

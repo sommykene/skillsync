@@ -1,8 +1,8 @@
 "use client";
 
 import { NoPlanError } from "@skillsync/components/NoPlanError";
-import { RecapCard } from "@skillsync/components/RecapCard";
-import { WeekCard } from "@skillsync/components/WeekCard";
+import { FinalOutcomesCard } from "@skillsync/components/FinalOutcomesCard";
+import { WeekCard } from "@skillsync/app/plan/components/WeekCard";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { Layout } from "../../Layout";
@@ -80,7 +80,7 @@ export const PlanPage = ({ planId }: { planId: string }) => {
               deliverables. 🚀
             </p>
           </div>
-          <RecapCard recap={plan.finalOutcomes} />
+          <FinalOutcomesCard recap={plan.finalOutcomes} />
         </div>
         <br />
         {/* <LearningPathCard plan={plan} className="max-w-[550px] mb-8" /> */}

@@ -1,13 +1,14 @@
 "use client";
 
 import { NoPlanError } from "@skillsync/components/NoPlanError";
-import { WeekCard } from "@skillsync/components/WeekCard";
+import { WeekCard } from "@skillsync/app/plan/components/WeekCard";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { Layout } from "../../Layout";
 import { getPlanById } from "../../queries/getPlanById";
 import { ActionCard } from "../../components/ActionCard";
 import { useSupabaseClient } from "@skillsync/hooks/useSupabaseClient";
+import { RecapCard } from "../../components/RecapCard";
 
 export const WeekPage = ({
   weekIndex,
@@ -98,7 +99,7 @@ export const WeekPage = ({
               )}
             </div>
           </div>
-          <div>
+          <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-4">
               {week.actions
                 .sort((a1, a2) => a1.action.localeCompare(a2.action))
@@ -109,6 +110,16 @@ export const WeekPage = ({
                       action={action}
                       planId={planId}
                     />
+                  );
+                })}
+            </div>
+            <hr className="border-primary rounded" />
+            <div className="flex flex-col gap-4">
+              {week.recap
+                .sort((r1, r2) => r1.action.localeCompare(r2.action))
+                .map((recap) => {
+                  return (
+                    <RecapCard key={recap.id} recap={recap} planId={planId} />
                   );
                 })}
             </div>

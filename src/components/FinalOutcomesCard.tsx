@@ -1,7 +1,7 @@
+import { FinalOutcomeType } from "@skillsync/app/types/plan";
 import { CheckBadgeIcon } from "@skillsync/assets/CheckBadgeIcon";
-import { FinalOutcome } from "@skillsync/utils/breakdowns";
 
-export const RecapCard = ({ recap }: { recap: FinalOutcome[] }) => {
+export const FinalOutcomesCard = ({ recap }: { recap: FinalOutcomeType[] }) => {
   return (
     <div
       className={`flex flex-col gap-2 items-center justify-start text-center bg-white rounded-md  p-4 hover:drop-shadow-md text-primary cursor-pointer w-[100%]`}>

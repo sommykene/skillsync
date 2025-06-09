@@ -3,6 +3,7 @@
 import dayjs from "dayjs";
 import { ReactNode } from "react";
 import { PlanBreakdownType } from "../types/plan";
+import Link from "next/link";
 
 export const Layout = ({
   children,
@@ -17,9 +18,11 @@ export const Layout = ({
   return (
     <div className="min-h-screen flex items-center justify-start flex-col mb-[100px] relative">
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-6 text-center mt-[20vh] bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-          {plan.title}
-        </h1>
+        <Link href={`/plan/${plan.id}`}>
+          <h1 className="text-4xl font-bold mb-6 text-center mt-[20vh] bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            {plan.title}
+          </h1>
+        </Link>
         <p className=" font-semibold text-center ">
           You started on {startDate.format("DD MMMM YYYY")} and are on week{" "}
           {currentWeek + 1}
