@@ -9,7 +9,7 @@ export const FinalOutcomesCard = ({ recap }: { recap: FinalOutcomeType[] }) => {
       {recap.map((item) => (
         <div key={item.id} className="flex gap-2">
           <div className="flex items-center justify-center rounded-full">
-            <CheckBadgeIcon className="size-5" />
+            <CheckBadgeIcon id={item.id} className="size-5" />
           </div>
           <h5 className="text-md">{item.outcome}</h5>
         </div>

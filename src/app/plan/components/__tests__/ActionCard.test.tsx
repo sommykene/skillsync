@@ -2,7 +2,7 @@ import { type ActionType, statusEnum } from "@skillsync/app/types/plan";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ReactNode } from "react";
-import { ActionCard } from "./ActionCard";
+import { ActionCard } from "../ActionCard";
 
 jest.mock("@skillsync/hooks/useSupabaseClient", () => ({
   useSupabaseClient: jest.fn(() => ({

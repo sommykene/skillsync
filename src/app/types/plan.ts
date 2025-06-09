@@ -16,7 +16,7 @@ export type RecapType = {
 
 export type WeekBreakdownType = {
   id: string;
-  weekNumber: string;
+  weekNumber: number;
   objective: string;
   goal: string;
   actions: ActionType[];

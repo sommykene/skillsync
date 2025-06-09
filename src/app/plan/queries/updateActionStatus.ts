@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import dayjs from "dayjs";
 
 export const updateActionStatus = async (
   actionId: string,
@@ -12,7 +13,10 @@ export const updateActionStatus = async (
   try {
     await client
       .from("action")
-      .update({ status })
+      .update({
+        status,
+        dateCompleted: status === "completed" ? dayjs().toISOString() : null,
+      })
       .eq("id", actionId)
       .select("id");
 

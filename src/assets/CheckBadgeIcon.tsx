@@ -1,9 +1,11 @@
 "use client";
 
 export const CheckBadgeIcon = ({
+  id,
   className,
   solid,
 }: {
+  id: string;
   className: string;
   solid?: boolean;
 }) => {
@@ -13,6 +15,7 @@ export const CheckBadgeIcon = ({
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="currentColor"
+        data-testid={`check-badge-icon-solid-${id}`}
         className={className ?? "size-6"}>
         <path
           fillRule="evenodd"
@@ -29,6 +32,7 @@ export const CheckBadgeIcon = ({
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
+      data-testid={`check-badge-icon-${id}`}
       className={className ?? "size-6"}>
       <path
         strokeLinecap="round"

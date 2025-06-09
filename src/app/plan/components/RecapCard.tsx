@@ -2,6 +2,8 @@ import { RecapType } from "@skillsync/app/types/plan";
 import { useSupabaseClient } from "@skillsync/hooks/useSupabaseClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateRecapStatus } from "../queries/updateRecapStatus";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 export const RecapCard = ({
   planId,
@@ -27,6 +29,14 @@ export const RecapCard = ({
       });
     },
   });
+
+  useEffect(() => {
+    if (error) {
+      toast.error("Could not update recap status. Please try again later.", {
+        duration: 3000,
+      });
+    }
+  }, [error]);
 
   return (
     <div

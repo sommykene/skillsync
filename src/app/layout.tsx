@@ -5,6 +5,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ReactQueryClientProvider } from "./providers/ReactQueryClientProvider";
+import { Toaster } from "react-hot-toast";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -29,6 +30,7 @@ export default function RootLayout({
         className={`${montserrat.variable} antialiased w-[100%] max-w-7xl mx-auto px-4`}>
         <ClerkProvider>
           <ReactQueryClientProvider>
+            <Toaster position="top-right" reverseOrder={true} />
             <Navbar />
             {children}
           </ReactQueryClientProvider>

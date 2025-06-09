@@ -18,6 +18,7 @@ export const WeekCard = ({ week }: { week: WeekBreakdownType }) => {
           <div key={action.id} className="flex gap-2">
             <div className="flex items-center justify-center rounded-full">
               <CheckBadgeIcon
+                id={action.id}
                 className="size-5"
                 solid={action.status === "completed"}
               />
@@ -31,6 +32,7 @@ export const WeekCard = ({ week }: { week: WeekBreakdownType }) => {
           <div key={item.id} className="flex gap-2">
             <div className="flex items-center justify-center rounded-full">
               <CheckBadgeIcon
+                id={item.id}
                 className="size-5"
                 solid={item.status === "completed"}
               />
