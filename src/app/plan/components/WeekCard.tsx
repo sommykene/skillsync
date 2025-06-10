@@ -5,10 +5,18 @@ import {
 } from "@skillsync/app/types/plan";
 import { CheckBadgeIcon } from "@skillsync/assets/CheckBadgeIcon";
 
-export const WeekCard = ({ week }: { week: WeekBreakdownType }) => {
+export const WeekCard = ({
+  week,
+  isCurrentWeek,
+}: {
+  week: WeekBreakdownType;
+  isCurrentWeek?: boolean;
+}) => {
   return (
     <div
-      className={`flex flex-col gap-2 items-center justify-start text-center bg-white rounded-md  p-4 hover:drop-shadow-md text-primary cursor-pointer h-full`}>
+      className={`flex flex-col gap-2 items-center justify-start text-center bg-white rounded-md  p-4 text-primary h-full ${
+        isCurrentWeek ? "border border-primary" : ""
+      }`}>
       <h3 className="font-semibold text-primary/80">Week {week.weekNumber}</h3>
       <h3 className="text-lg font-bold">{week.objective}</h3>
       <p className="text-text">{week.goal}</p>

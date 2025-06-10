@@ -65,6 +65,7 @@ export const DurationPage = ({
                 id="hours"
                 name="hours"
                 value={hours}
+                max={168}
                 onChange={(e) => setHours(parseInt(e.target.value))}
                 className="mt-1 block rounded-md border-gray-300 bg-white shadow-sm p-2 text-right"
               />

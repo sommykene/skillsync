@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 export const updateRecapStatus = async (
   recapId: string,
   status: string,
+  notes: string,
   client: SupabaseClient
 ): Promise<{
   id?: string;
@@ -15,6 +16,7 @@ export const updateRecapStatus = async (
       .from("recap")
       .update({
         status,
+        notes,
         dateCompleted: status === "completed" ? dayjs().toISOString() : null,
       })
       .eq("id", recapId)

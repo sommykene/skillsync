@@ -9,6 +9,7 @@ import { Layout } from "../../Layout";
 import { getPlanById } from "../../queries/getPlanById";
 import { useSupabaseClient } from "@skillsync/hooks/useSupabaseClient";
 import { updatePlanCompleteness } from "../../queries/updatePlanCompleteness";
+import dayjs from "dayjs";
 
 export const PlanPage = ({ planId }: { planId: string }) => {
   const { client } = useSupabaseClient();
@@ -85,7 +86,7 @@ export const PlanPage = ({ planId }: { planId: string }) => {
       <Layout plan={plan}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-[100%]">
           <div
-            className={`flex flex-col gap-2 items-center justify-center text-center bg-white rounded-md py-4  px-8 hover:drop-shadow-md text-primary cursor-pointer w-[100%]`}>
+            className={`flex flex-col gap-2 items-center justify-center text-center bg-white rounded-md py-4  px-8 text-primary w-[100%]`}>
             <h3 className="text-lg font-bold">Summary</h3>
             <p className="text-text">
               This 6-week roadmap provides a structured approach to mastering
@@ -105,8 +106,13 @@ export const PlanPage = ({ planId }: { planId: string }) => {
               <Link
                 key={week.id}
                 href={`/plan/${planId}/week${index + 1}`}
-                className="h-[100%]">
-                <WeekCard week={week} />
+                className="h-[100%] hover:drop-shadow-md">
+                <WeekCard
+                  week={week}
+                  isCurrentWeek={
+                    index === Math.floor(dayjs().diff(plan.startDate, "week"))
+                  }
+                />
               </Link>
             );
           })}

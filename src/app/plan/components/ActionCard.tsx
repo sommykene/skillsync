@@ -81,7 +81,7 @@ export const ActionCard = ({
         <div>
           <p className="text-sm mt-2 italic">notes</p>
           <textarea
-            className="text-sm text-text mt-2 w-full h-24 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-accent"
+            className="text-sm text-text mt-2 w-full h-24 rounded-md focus:outline-none focus:ring-2 focus:ring-accent"
             placeholder="Add your notes here..."
             defaultValue={action.notes || ""}
             onBlur={(e) => {

@@ -6,7 +6,8 @@ export const getLearningPaths = async (): Promise<LearningPathType[]> => {
 
   const { data, error } = await client
     .from("learning_path")
-    .select("id,title,focus,topics");
+    .select("id,title,focus,topics")
+    .order("title", { ascending: true });
 
   if (error) throw error;
   return data ?? [];

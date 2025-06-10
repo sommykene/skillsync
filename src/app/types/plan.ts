@@ -12,6 +12,7 @@ export type RecapType = {
   action: string;
   status: statusEnum;
   dateCompleted?: string;
+  notes?: string;
 };
 
 export type WeekBreakdownType = {

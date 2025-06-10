@@ -1,6 +1,6 @@
 import { RecapType, statusEnum } from "@skillsync/app/types/plan";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ReactNode } from "react";
 import { RecapCard } from "../RecapCard";
 
@@ -41,5 +41,31 @@ describe("RecapCard Component", () => {
     );
     const cardElement = screen.getByTestId("recap-card");
     expect(cardElement).toHaveClass(customClass);
+  });
+
+  it("opens noted on click", () => {
+    renderComponent(<RecapCard recap={mockRecap} planId={"planId"} />);
+    const cardElement = screen.getByTestId("recap-card-header");
+    waitFor(() => {
+      fireEvent.click(cardElement);
+    });
+    expect(
+      screen.getByPlaceholderText("Add your notes here...")
+    ).toBeInTheDocument();
+  });
+
+  it("opens noted on click and displays notes", () => {
+    renderComponent(
+      <RecapCard
+        recap={{ ...mockRecap, notes: "new note here" }}
+        planId={"planId"}
+      />
+    );
+    const cardElement = screen.getByTestId("recap-card-header");
+    waitFor(() => {
+      fireEvent.click(cardElement);
+    });
+
+    expect(screen.getByText("new note here")).toBeInTheDocument();
   });
 });
