@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "SkillSync",
@@ -18,7 +19,12 @@ const Page = () => {
       <h2 className="text-xl font-semibold text-center">
         the platform to learn and grow your technical skills
       </h2>
-      <button className="button mt-8">Create a profile</button>
+      <div className="flex justify-center w-[100%] gap-2">
+        <button className="button-outline mt-8">Create a profile</button>
+        <Link href={"/generate"} className="button mt-8">
+          Generate Plan
+        </Link>
+      </div>
     </div>
   );
 };

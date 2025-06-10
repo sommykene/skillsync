@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Badge } from "./Badge";
 import Link from "next/link";
+import { getTopicParams } from "@skillsync/app/helpers/getTopicParams";
 
 export const TopicsSelector = ({
   pathId: planId,
@@ -23,9 +24,10 @@ export const TopicsSelector = ({
       return [...prev, selectedTopic];
     });
   };
+
   return (
     <div className="flex flex-col items-center gap-20">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 justify-center">
         {topics.map((topic) => (
           <Badge
             key={topic}
@@ -37,8 +39,8 @@ export const TopicsSelector = ({
       </div>
       {selectedTopics.length > 0 && (
         <Link
-          href={`/generate/${planId}/duration?topics=${selectedTopics.join(
-            ","
+          href={`/generate/${planId}/duration?${getTopicParams(
+            selectedTopics
           )}`}
           className={`button`}>
           Continue

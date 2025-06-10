@@ -3,14 +3,17 @@
 import { NoPlanError } from "@skillsync/components/NoPlanError";
 import { FinalOutcomesCard } from "@skillsync/components/FinalOutcomesCard";
 import { WeekCard } from "@skillsync/app/plan/components/WeekCard";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { Layout } from "../../Layout";
 import { getPlanById } from "../../queries/getPlanById";
 import { useSupabaseClient } from "@skillsync/hooks/useSupabaseClient";
+import { updatePlanCompleteness } from "../../queries/updatePlanCompleteness";
 
 export const PlanPage = ({ planId }: { planId: string }) => {
   const { client } = useSupabaseClient();
+  const queryClient = useQueryClient();
+
   const {
     isLoading,
     data: plan,
@@ -18,6 +21,18 @@ export const PlanPage = ({ planId }: { planId: string }) => {
   } = useQuery({
     queryKey: ["plan", { id: planId }],
     queryFn: () => getPlanById({ planId, client }),
+  });
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["plan", { id: planId }],
+    mutationFn: () =>
+      updatePlanCompleteness(planId, !!plan?.dateCompleted, client),
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["plan", { id: planId }],
+        refetchType: "all",
+      });
+    },
   });
 
   if (isLoading) {
@@ -96,6 +111,17 @@ export const PlanPage = ({ planId }: { planId: string }) => {
             );
           })}
         </div>
+        <button
+          className="button mt-8 "
+          onClick={() => {
+            mutate();
+          }}>
+          {isPending
+            ? "Loading..."
+            : plan.dateCompleted
+            ? "Mark plan as incomplete"
+            : "Mark plan as complete"}
+        </button>
       </Layout>
     );
 

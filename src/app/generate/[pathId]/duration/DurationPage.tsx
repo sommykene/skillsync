@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { getLearningPath } from "../../queries/getLearningPath";
 import { NoPlanError } from "@skillsync/components/NoPlanError";
+import { getTopicParams } from "@skillsync/app/helpers/getTopicParams";
 
 export const DurationPage = ({
   id,
@@ -47,7 +48,7 @@ export const DurationPage = ({
         <LearningPathCard path={data} className="max-w-[550px]" />
         <br />
         <h3 className="font-semibold text-center text-text">Topics Selected</h3>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 justify-center">
           {topics.map((topic) => (
             <Badge key={topic}>{topic}</Badge>
           ))}
@@ -73,8 +74,8 @@ export const DurationPage = ({
         </div>
         {hours != 0 && (
           <Link
-            href={`/generate/${id}/plan?topics=${topics.join(
-              ","
+            href={`/generate/${id}/plan?${getTopicParams(
+              topics
             )}&hours=${hours}`}
             className="button mt-8">
             Continue

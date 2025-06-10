@@ -12,7 +12,9 @@ export const Layout = ({
   children: ReactNode;
   plan: PlanBreakdownType;
 }) => {
-  const startDate = dayjs().subtract(1, "week").startOf("week");
+  console.log("Plan Layout", plan.startDate, plan.dateCompleted);
+  const startDate = dayjs(plan.startDate);
+  const dateCompleted = plan.dateCompleted && dayjs(plan.dateCompleted);
   const currentWeek = Math.floor(dayjs().diff(startDate, "week"));
 
   return (
@@ -23,10 +25,16 @@ export const Layout = ({
             {plan.title}
           </h1>
         </Link>
-        <p className=" font-semibold text-center ">
-          You started on {startDate.format("DD MMMM YYYY")} and are on week{" "}
-          {currentWeek + 1}
-        </p>
+        {!dateCompleted ? (
+          <p className=" font-semibold text-center ">
+            You started on {startDate.format("DD MMMM YYYY")} and are on week{" "}
+            {currentWeek + 1}
+          </p>
+        ) : (
+          <p className=" font-semibold text-center ">
+            You completed this plan {dateCompleted.format("DD MMMM YYYY")}
+          </p>
+        )}
       </div>
       {children}
       <button

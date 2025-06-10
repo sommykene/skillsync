@@ -1,16 +1,17 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import { NoPlanError } from "@skillsync/components/NoPlanError";
-import { FinalOutcomesCard } from "@skillsync/components/FinalOutcomesCard";
 import { WeekCard } from "@skillsync/app/plan/components/WeekCard";
+import { FinalOutcomesCard } from "@skillsync/components/FinalOutcomesCard";
+import { NoPlanError } from "@skillsync/components/NoPlanError";
+import { useSupabaseClient } from "@skillsync/hooks/useSupabaseClient";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { getLearningPath } from "../../queries/getLearningPath";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { generatePlan } from "../../queries/generatePlan";
+import { getLearningPath } from "../../queries/getLearningPath";
 import { savePlan } from "../../queries/savePlan";
-import { useSupabaseClient } from "@skillsync/hooks/useSupabaseClient";
-import { redirect } from "next/navigation";
 
 export const GeneratedPlan = ({
   id,
@@ -19,10 +20,11 @@ export const GeneratedPlan = ({
 }: {
   id: string;
   hours?: string;
-  topics?: string;
+  topics?: string[];
 }) => {
   const { isLoaded, isSignedIn } = useUser();
   const { client } = useSupabaseClient();
+  const router = useRouter();
 
   const { data: path, error: pathError } = useQuery({
     queryKey: ["learningPath", { id }],
@@ -39,7 +41,7 @@ export const GeneratedPlan = ({
     queryFn: async () => {
       const data = await generatePlan({
         path: path,
-        topics: topics ?? "",
+        topics: topics?.join(", ") ?? "",
         hours: hours ?? "10",
       });
       return data;
@@ -50,23 +52,19 @@ export const GeneratedPlan = ({
   });
 
   const {
-    data: savedData,
-    error: saveError,
+    // error: saveError,
+    isPending,
     mutate,
   } = useMutation({
     mutationKey: ["savePlan"],
     mutationFn: async () => {
       if (!generatedPlan) throw new Error("No plan to save");
-      const jjj = await savePlan(
-        id,
-        generatedPlan,
-        topics?.split(", "),
-        client
-      );
+      const jjj = await savePlan(id, generatedPlan, topics, client);
       return jjj;
     },
     onSuccess: (data) => {
-      redirect(`/plan/${data.id}`);
+      toast.success("Plan saved successfully!");
+      router.replace(`/plan/${data.id}`);
     },
   });
 
@@ -155,7 +153,7 @@ export const GeneratedPlan = ({
         </div>
         <br />
         <button onClick={() => mutate()} className={`button mt-6`}>
-          Save
+          {isPending ? "Saving..." : "Save Plan"}
         </button>
         <br />
         <button

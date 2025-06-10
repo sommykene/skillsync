@@ -67,6 +67,23 @@ describe("ActionCard Component", () => {
     waitFor(() => {
       fireEvent.click(cardElement);
     });
-    expect(screen.getByText("Add notes here...")).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText("Add your notes here...")
+    ).toBeInTheDocument();
+  });
+
+  it("opens noted on click and displays notes", () => {
+    renderComponent(
+      <ActionCard
+        action={{ ...mockAction, notes: "new note here" }}
+        planId={"planId"}
+      />
+    );
+    const cardElement = screen.getByTestId("action-card-header");
+    waitFor(() => {
+      fireEvent.click(cardElement);
+    });
+
+    expect(screen.getByText("new note here")).toBeInTheDocument();
   });
 });

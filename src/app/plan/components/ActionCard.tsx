@@ -20,10 +20,19 @@ export const ActionCard = ({
 
   const { error, mutate } = useMutation({
     mutationKey: ["updateActionStatus", action.id],
-    mutationFn: async (newStatus: string) => {
-      return await updateActionStatus(action.id, newStatus, client);
+    mutationFn: async ({
+      newStatus,
+      notes,
+    }: {
+      newStatus: string;
+      notes: string;
+    }) => {
+      return await updateActionStatus(action.id, newStatus, notes, client);
     },
     onSuccess: async () => {
+      toast.success("Action updated", {
+        duration: 3000,
+      });
       await queryClient.invalidateQueries({
         queryKey: ["plan", { id: planId }],
         refetchType: "all",
@@ -33,7 +42,7 @@ export const ActionCard = ({
 
   useEffect(() => {
     if (error) {
-      toast.error("Could not update recap status. Please try again later.", {
+      toast.error("Could not update status. Please try again later.", {
         duration: 3000,
       });
     }
@@ -58,7 +67,7 @@ export const ActionCard = ({
             onChange={(e) => {
               const newStatus = e.target.value;
               if (newStatus !== action.status) {
-                mutate(newStatus);
+                mutate({ newStatus, notes: action.notes || "" });
               }
             }}>
             <option value="todo">Not Started</option>
@@ -70,9 +79,17 @@ export const ActionCard = ({
       </div>
       {!collapsed && (
         <div>
-          <p className="text-sm text-text mt-2">
-            {action.notes || "Add notes here..."}
-          </p>
+          <p className="text-sm mt-2 italic">notes</p>
+          <textarea
+            className="text-sm text-text mt-2 w-full h-24 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-accent"
+            placeholder="Add your notes here..."
+            defaultValue={action.notes || ""}
+            onBlur={(e) => {
+              const updatedNotes = e.target.value ?? "";
+              if (updatedNotes !== (action.notes || "")) {
+                mutate({ newStatus: action.status, notes: updatedNotes });
+              }
+            }}></textarea>
         </div>
       )}
     </div>

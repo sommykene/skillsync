@@ -10,7 +10,7 @@ const Page = async ({
   searchParams,
 }: {
   params: Promise<{ pathId: string }>;
-  searchParams: Promise<{ topics?: string }>;
+  searchParams: Promise<{ topics?: string | string[] }>;
 }) => {
   const { pathId } = await params;
   const search = await searchParams;
@@ -18,7 +18,11 @@ const Page = async ({
   return (
     <DurationPage
       id={pathId}
-      topics={search?.topics ? search.topics?.split(",") : []}
+      topics={
+        typeof search?.topics === "string"
+          ? [search.topics]
+          : search?.topics || []
+      }
     />
   );
 };

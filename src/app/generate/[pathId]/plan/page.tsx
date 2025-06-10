@@ -15,7 +15,13 @@ const Page = async ({
   const { pathId } = await params;
   const { topics, hours } = await searchParams;
 
-  return <GeneratedPlan id={pathId} topics={topics} hours={hours} />;
+  return (
+    <GeneratedPlan
+      id={pathId}
+      topics={typeof topics === "string" ? [topics] : topics || []}
+      hours={hours}
+    />
+  );
 };
 
 export default Page;
